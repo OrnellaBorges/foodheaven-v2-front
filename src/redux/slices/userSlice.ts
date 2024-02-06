@@ -22,19 +22,19 @@ export const userSlice = createSlice({
     reducers: {
         // connectUser: (state = initialState, action) => ({...state, user: {infos: action.payload, isLogged: true}}),
         connectUser: (state = initialState, action) => {
+            console.log("connectUser");
             return {
                 ...state,
-                user: {
-                    infos: action.payload,
-                    isLogged: true,
-                },
+                infos: action.payload,
+                isLogged: true,
             };
         },
         //logoutUser:(state = initialState) => ({...state, user: {...initialState}}),
         logoutUser: (state = initialState) => {
+            console.log("logoutUser");
             return {
                 ...state, // state de connectUser
-                user: { ...initialState }, //nettoyage  valeur de state remplacé par la copie ... du state du départ
+                ...initialState, //nettoyage  valeur de state remplacé par la copie ... du state du départ
             };
         },
     },

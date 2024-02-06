@@ -2,6 +2,9 @@ import { useState } from "react";
 import { logOneUser } from "../api/userApi";
 import type { LoginUserData } from "../types/userTypes";
 
+import { useDispatch } from "react-redux";
+import { connectUser } from "../redux/slices/userSlice";
+
 // le formulaire fait appal a ce hook
 // ce hook va faire appel à une fonction dans le dossier api
 
@@ -16,11 +19,13 @@ export function useLoginUser() {
     const [isError, setIsError] = useState<boolean>(false);
     //const [userloginStatus, setUserLoginStatus] = useState<ResponseLoginUser>();
     const [statusCode, setStatusCode] = useState<number>();
-    const [userDataLogin, setUserDataLogin] = useState<UserObjetData>({
+    const dispatch = useDispatch();
+
+    /* const [userDataLogin, setUserDataLogin] = useState<UserObjetData>({
         firstName: "",
         lastName: "",
         userId: null,
-    });
+    }); */
 
     /*   const tryGetUser = async (userIdReceived: number) => {
     try {
@@ -35,24 +40,28 @@ export function useLoginUser() {
         setIsLoading(true); // lorsque le client appui sur le bouton on attend le retour de la bdd
         try {
             const response = await logOneUser(datas); // dedans il y a l'axios.get
+            console.log("response", response);
             const codeReceived = response.data.status;
+
             setStatusCode(codeReceived);
             const token = response.data.token;
+            // stockage du token dans le LS
+            const stringifiedToken = JSON.stringify(token);
+            localStorage.setItem("token", stringifiedToken);
             //const userIdReceived = response.data.user_id;
             //setUserId(userIdReceived);
 
             // objet UserData :
-            const dataReceived = {
+            const dataUserInfo = {
                 firstName: response.data.firstName,
                 lastName: response.data.lastName,
                 userId: response.data.user_id,
             };
+            dispatch(connectUser(dataUserInfo));
+            //Utilisation de useDispatch pour dispatcher les infos du user dans le store de Redux
 
-            setUserDataLogin(dataReceived);
+            //setUserDataLogin(dataReceived);
 
-            // stockage du token dans le LS
-            const stringifiedToken = JSON.stringify(token);
-            localStorage.setItem("token", stringifiedToken);
             //setUserLoginStatus(userStatusApi);
             // on va recevoir un objet : status : 200 , token, user_id, msg
             /* tryGetUser(userIdReceived); */
@@ -71,5 +80,5 @@ export function useLoginUser() {
         user: user,
         register: register
     }; */
-    return { isLoading, isError, statusCode, userDataLogin, tryLogUser };
+    return { isLoading, isError, statusCode, tryLogUser };
 }

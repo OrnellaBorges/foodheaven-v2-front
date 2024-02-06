@@ -13,8 +13,7 @@ export function LoginForm({ setNotification }) {
     const [warnMode, setWarnMode] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    const { isLoading, isError, statusCode, userDataLogin, tryLogUser } =
-        useLoginUser();
+    const { isLoading, isError, statusCode, tryLogUser } = useLoginUser();
 
     // creation d'une fonction qui permet de verifier les champs
     const checkFields = () => {
@@ -67,8 +66,27 @@ export function LoginForm({ setNotification }) {
                     placeholder="password *"
                 />
 
-                <button type="submit">Se connecter</button>
+                <button disabled={isLoading} type="submit">
+                    Se connecter
+                </button>
             </form>
+
+            {/* Affichage des messages en cas de problèmes... */}
+            {isError && <p style={{ color: "red" }}>Serveur indisponible</p>}
+
+            {!isError && isEmptyField && (
+                <p style={{ color: "red" }}>Les champs sont vide</p>
+            )}
+
+            {statusCode === 401 && (
+                <p style={{ color: "red" }}>Cet email est déjà pris</p>
+            )}
+
+            {statusCode === 500 && (
+                <p style={{ color: "red" }}>
+                    Problème lors de la creation du compte
+                </p>
+            )}
         </>
     );
 }
