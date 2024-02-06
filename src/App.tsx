@@ -28,7 +28,13 @@ export default function App() {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<LoginForm />} />
+                    {/* <Route path="/login" element={<LoginForm />} /> */}
+                    <Route
+                        path="/login"
+                        element={
+                            <LoginForm setNotification={setNotification} />
+                        }
+                    />
                     <Route
                         path="/register"
                         element={
