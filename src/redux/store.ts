@@ -4,5 +4,5 @@ import { rootReducer } from "./reducers";
 // brancher le store au routeReducer pour le radar
 export const store = configureStore({
     reducer: rootReducer,
-    devTools: process.env.NODE_ENV !== "production",
+    devTools: process.env.NODE_ENV !== "production", // pour le plugin du radar de redux de chrome
 });

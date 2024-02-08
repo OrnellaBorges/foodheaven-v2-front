@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface UserLoginData {
+    firstName?: string;
+    lastName?: string;
+    userId?: number;
+}
+
 // ici on crée un Objet user = state initiale
 const initialState = {
     infos: {},
@@ -11,7 +17,7 @@ const initialState = {
 
 type StateType = {
     user: {
-        infos: {};
+        infos: UserLoginData;
         isLogged: boolean;
     };
 };

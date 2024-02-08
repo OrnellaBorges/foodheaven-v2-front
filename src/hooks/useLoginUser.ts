@@ -8,24 +8,12 @@ import { connectUser } from "../redux/slices/userSlice";
 // le formulaire fait appal a ce hook
 // ce hook va faire appel à une fonction dans le dossier api
 
-interface UserObjetData {
-    firstName: string;
-    lastName: string;
-    userId: number;
-}
-
 export function useLoginUser() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     //const [userloginStatus, setUserLoginStatus] = useState<ResponseLoginUser>();
     const [statusCode, setStatusCode] = useState<number>();
     const dispatch = useDispatch();
-
-    /* const [userDataLogin, setUserDataLogin] = useState<UserObjetData>({
-        firstName: "",
-        lastName: "",
-        userId: null,
-    }); */
 
     /*   const tryGetUser = async (userIdReceived: number) => {
     try {

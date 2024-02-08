@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Header() {
     const user = useSelector(selectUser);
+    console.log("user", user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ export function Header() {
             {/* Conditionnement de l'affichage des bouton de connexion */}
             {user.isLogged ? (
                 <div>
+                    Bonjour {user.infos.firstName}
                     <button onClick={() => handleLogout()}>Logout</button>
                 </div>
             ) : (
