@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRegisterUser } from "../../hooks/useRegisterUser";
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate, Navigate } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/slices/userSlice";
 
 export function RegisterForm({ setNotification }) {
     /* const result = useRegisterUser();
@@ -10,14 +14,16 @@ export function RegisterForm({ setNotification }) {
     const tryRegisterUser = result.tryRegisterUser */
     const navigate = useNavigate();
 
+    const user = useSelector(selectUser);
+
     // le Hook nous renvoi ici tryRegisterUser
     const { isLoading, isError, statusCode, tryRegisterUser } =
         useRegisterUser();
 
-    const [email, setEmail] = useState<string>("abc@gmail.com");
+    const [email, setEmail] = useState<string>("john.doe@gmail.com");
     const [password, setPassword] = useState<string>("123456");
-    const [firstName, setFirstName] = useState<string>("a");
-    const [lastName, setLastName] = useState<string>("b");
+    const [firstName, setFirstName] = useState<string>("John");
+    const [lastName, setLastName] = useState<string>("Doe");
     const [isEmptyField, setIsEmptyField] = useState<boolean>(false);
     // ce state permet de faire apparaitre la popup de message
     const [warnMode, setWarnMode] = useState<boolean>(false);
@@ -57,6 +63,10 @@ export function RegisterForm({ setNotification }) {
     if (statusCode === 200) {
         setNotification("Votre compte à bien été créé!");
         navigate("/login");
+    }
+
+    if (user.isLogged) {
+        return <Navigate to="/" />;
     }
 
     return (

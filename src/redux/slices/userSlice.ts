@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface UserLoginData {
+export type UserLoginData = {
     firstName?: string;
     lastName?: string;
     userId?: number;
-}
+};
 
 // ici on crée un Objet user = state initiale
 const initialState = {
@@ -13,7 +13,7 @@ const initialState = {
 };
 
 // creer la tranche
-// createSlice est une méthode qui provient de reduxToolkit
+// createSlice est une function qui provient de reduxToolkit
 
 type StateType = {
     user: {
@@ -22,22 +22,32 @@ type StateType = {
     };
 };
 
+type UserActionType = {
+    payload: UserLoginData;
+    type: string;
+};
+
 export const userSlice = createSlice({
     name: "user", // nom de la slice
     initialState,
     reducers: {
         // connectUser: (state = initialState, action) => ({...state, user: {infos: action.payload, isLogged: true}}),
-        connectUser: (state = initialState, action) => {
-            console.log("connectUser");
-            return {
+        connectUser: (state = initialState, action: UserActionType) => {
+            // persistance redux avec LS
+            const loggedUserData = {
                 ...state,
                 infos: action.payload,
                 isLogged: true,
             };
+            const globalState = {
+                user: loggedUserData,
+            };
+            localStorage.setItem("globalState", JSON.stringify(globalState));
+            return loggedUserData;
         },
         //logoutUser:(state = initialState) => ({...state, user: {...initialState}}),
         logoutUser: (state = initialState) => {
-            console.log("logoutUser");
+            localStorage.removeItem("globalState");
             return {
                 ...state, // state de connectUser
                 ...initialState, //nettoyage  valeur de state remplacé par la copie ... du state du départ

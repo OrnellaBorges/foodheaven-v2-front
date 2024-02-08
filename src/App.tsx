@@ -4,6 +4,7 @@ import { Layout } from "./Layout";
 import { Home } from "./containers/Home/Home";
 import { RegisterForm } from "./containers/Forms/RegisterForm";
 import { LoginForm } from "./containers/Forms/LoginForm";
+import { ProfilForm } from "./containers/Forms/ProfilForm";
 import { useEffect, useState } from "react";
 import { Notification } from "./components/Notification/Notification";
 
@@ -41,6 +42,7 @@ export default function App() {
                             <RegisterForm setNotification={setNotification} />
                         }
                     />
+                    <Route path="/profil" element={<ProfilForm />} />
                 </Routes>
             </Layout>
             {/* <button onClick={() => setNotification("message")}>notify</button> */}

@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/slices/userSlice";
 //HOOK PERSO
 import { useLoginUser } from "../../hooks/useLoginUser";
 
 export function LoginForm({ setNotification }) {
+    // lui il vien de redux
+    const user = useSelector(selectUser);
+    console.log("usertest", user);
+
     //declaration des state qui vont acceuillir les data des formulaires
-    const [email, setEmail] = useState<string>("aze@gmail.com");
+    const [email, setEmail] = useState<string>("john.doe@gmail.com");
     const [password, setPassword] = useState<string>("123456");
     const [isEmptyField, setIsEmptyField] = useState<boolean>(false);
+
     // ce state permet de faire apparaitre la popup de message
     const [warnMode, setWarnMode] = useState<boolean>(false);
+
+    //
     const navigate = useNavigate();
 
     const { isLoading, isError, statusCode, tryLogUser } = useLoginUser();
@@ -47,6 +55,14 @@ export function LoginForm({ setNotification }) {
         navigate("/");
     }
 
+    // quand l'user est connecté on doit bloquer la navigation vers la page Loggin
+    // soluce faire ine condition en fonction du state is Logged
+    // utiliser soit Navigate ou navigate de react - redux
+    if (user.isLogged) {
+        console.log("first");
+        return <Navigate to="/" />;
+    }
+
     return (
         <>
             <h1>Login</h1>
@@ -61,7 +77,7 @@ export function LoginForm({ setNotification }) {
                 <input
                     defaultValue={password}
                     onChange={(e) => setPassword(e.currentTarget.value)}
-                    type="password"
+                    //type="password"
                     name="password"
                     placeholder="password *"
                 />
@@ -79,7 +95,7 @@ export function LoginForm({ setNotification }) {
             )}
 
             {statusCode === 401 && (
-                <p style={{ color: "red" }}>Cet email est déjà pris</p>
+                <p style={{ color: "red" }}>Mot de passe incorrect!</p>
             )}
 
             {statusCode === 500 && (
