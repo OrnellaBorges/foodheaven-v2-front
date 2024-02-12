@@ -42,7 +42,12 @@ export default function App() {
                             <RegisterForm setNotification={setNotification} />
                         }
                     />
-                    <Route path="/profil" element={<ProfilForm />} />
+                    <Route
+                        path="/profil"
+                        element={
+                            <ProfilForm setNotification={setNotification} />
+                        }
+                    />
                 </Routes>
             </Layout>
             {/* <button onClick={() => setNotification("message")}>notify</button> */}

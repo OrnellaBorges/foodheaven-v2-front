@@ -5,7 +5,7 @@ import type { LoginUserData } from "../types/userTypes";
 import { useDispatch } from "react-redux";
 import { connectUser } from "../redux/slices/userSlice";
 
-// le formulaire fait appal a ce hook
+// le formulaire fait appel a ce hook
 // ce hook va faire appel à une fonction dans le dossier api
 
 export function useLoginUser() {
@@ -39,11 +39,12 @@ export function useLoginUser() {
             //const userIdReceived = response.data.user_id;
             //setUserId(userIdReceived);
 
-            // objet UserData :
+            // objet UserData :pour envoyer dans le redux
             const dataUserInfo = {
                 firstName: response.data.firstName,
                 lastName: response.data.lastName,
                 userId: response.data.user_id,
+                email: response.data.email,
             };
             dispatch(connectUser(dataUserInfo));
             //Utilisation de useDispatch pour dispatcher les infos du user dans le store de Redux

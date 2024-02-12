@@ -65,6 +65,7 @@ export function RegisterForm({ setNotification }) {
         navigate("/login");
     }
 
+    // bloquer la navigation vers la page register si l'user est loggé
     if (user.isLogged) {
         return <Navigate to="/" />;
     }
@@ -78,20 +79,20 @@ export function RegisterForm({ setNotification }) {
                     type="email"
                     name="email"
                     placeholder="email *"
-                    onChange={(e) => setEmail(e.currentTarget.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                     defaultValue={password}
                     type="password"
                     name="password"
                     placeholder="password *"
-                    onChange={(e) => setPassword(e.currentTarget.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <input
                     defaultValue={firstName}
                     name="firstName"
                     placeholder="firstName *"
-                    onChange={(e) => setFirstName(e.currentTarget.value)}
+                    onChange={(e) => setFirstName(e.target.value)}
                 />
                 <input
                     defaultValue={lastName}

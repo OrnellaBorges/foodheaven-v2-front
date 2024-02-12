@@ -1,9 +1,11 @@
 import axios, { AxiosResponse } from "axios";
+
 import type {
     RegisterUserData,
     ResponseRegisterUser,
     LoginUserData,
     ResponseLoginUser,
+    UpdateUserData,
 } from "../types/userTypes";
 
 export async function createOneUser(
@@ -22,6 +24,22 @@ export async function logOneUser(datas: LoginUserData): Promise<AxiosResponse> {
     const responseApi = await axios.post<AxiosResponse<ResponseLoginUser>>(
         "http://localhost:9600/api/v1/user/login",
         datas
+    );
+    return responseApi;
+}
+
+export async function editOneUser(
+    datas: UpdateUserData,
+    userId: number
+): Promise<AxiosResponse> {
+    const token = localStorage.getItem("token");
+    console.log("token", token);
+    const responseApi = await axios.put<AxiosResponse<ResponseLoginUser>>(
+        `http://localhost:9600/api/v1/user/update/${userId}`,
+        datas,
+        {
+            headers: { "x-access-token": token },
+        }
     );
     return responseApi;
 }

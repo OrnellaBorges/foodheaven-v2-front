@@ -4,6 +4,7 @@ export type UserLoginData = {
     firstName?: string;
     lastName?: string;
     userId?: number;
+    email?: string;
 };
 
 // ici on crée un Objet user = state initiale

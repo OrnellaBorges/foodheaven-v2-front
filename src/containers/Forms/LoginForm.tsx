@@ -15,10 +15,10 @@ export function LoginForm({ setNotification }) {
     const [password, setPassword] = useState<string>("123456");
     const [isEmptyField, setIsEmptyField] = useState<boolean>(false);
 
-    // ce state permet de faire apparaitre la popup de message
+    // ce state permet de faire apparaitre un message si les champs sont mauvais
     const [warnMode, setWarnMode] = useState<boolean>(false);
 
-    //
+    //Pour la redirection
     const navigate = useNavigate();
 
     const { isLoading, isError, statusCode, tryLogUser } = useLoginUser();
